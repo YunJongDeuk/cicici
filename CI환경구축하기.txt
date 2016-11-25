@@ -1,0 +1,139 @@
+>> 유니티 CI 구축을 위해서는 프로 버전이 필요
+>> 유니티의 iOS빌드를 위해 빌드 머신을 맥으로 사용하는 경우가 기본적임
+
+>> egit 가이드 참고
+http://wiki.eclipse.org/EGit/User_Guide
+
+>> 젠킨스 계정 설정 잘못해서 로그인 못할때
+https://wiki.jenkins-ci.org/display/JENKINS/Disable+security
+
+>> 우분투에 깃 설치
+https://www.davidlab.net/ko/tech/how-to-setup-git-server-on-ubuntu-part1/
+https://www.davidlab.net/ko/tech/how-to-setup-git-server-on-ubuntu-part2/
+
+
+
+1. 이클립스 자바 개발 환경 구축
+JDK + 이클립스 + ADT + 안드로이드 스튜디오
+
+2. 깃 허브 저장소 생성
+
+3. Egit 설치
+http://itmir.tistory.com/461
+
+4. 이클립스 프로젝트 생성
+- R cannot be resloved 해결
+menifest 파일 Cannot resolve symbol '@drawable/ic_launcher' 수정
+
+http://stackoverflow.com/questions/29243121/cannot-resolve-symbol-drawable-ic-launcher
+
+5. CI 환경 셋팅
+소프트웨어 공학센터 자료\보고서&지침서\사례_04_01-Eclipse-EGit-GitHub-Jenkins.pdf
+
+- Egit 원격저장소로 PUSH 중 에러
+SSH키 생성 후 등록해야함
+http://www.songtory.com/post/001007/1/147
+
+Push할떄 SSH로 푸시
+http://wiki.eclipse.org/EGit/User_Guide#Github_Tutorial
+의 Push UpStream 부분 참고
+
+6. build.xml파일 생성
+http://blog.naver.com/PostView.nhn?blogId=kittenjun&logNo=10125029239
+
+커스터마이징
+
+> 빌드 유발
+- 플러그인 설치 GitHub Integration Plugin
+- Trigger a build when a change is pushed to GitHub
+https://wiki.jenkins-ci.org/display/JENKINS/Github+Plugin#GitHubPlugin-TriggerabuildwhenachangeispushedtoGitHub
+
+github webhooks 등록
+http://taewan.kim/blog/2016/02/03/bitbucket_jenkins_webhook/
+http://www.flask.moe/jenkins/polling/auto
+
+------------------------------------------------------------------------------------
+1. Java Runtime Environment(JRE) 설치
+http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+
+JDK설치
+
+JAVA_HOME, JRE_HOME 환경 변수 설정
+
+GIT설치
+
+
+2. WAS(Web Application Server) 구축
+2.1 TOMCAT설치
+다운로드 
+http://tomcat.apache.org/download-90.cgi
+
+설치 확인
+주소창에 http://localhost:8080/
+
+포트 바꾸기 
+http://blog.naver.com/kbobae333/220085239765
+
+
+
+탐캣 매니저 설정 사이트
+http://127.0.0.1:8080/manager
+
+환경 변수 설정
+
+3. 젠킨스 설치
+https://jenkins.io/index.html
+
+war 파일 설치
+
+http://localhost:8080/jenkins 접속
+
+초기 비밀 번호 설정
+secrets\initialAdminPassword
+
+플러그인 설치
+
+작업 폴더 변경
+webapps/jenkins/WEB-INF/web.xml
+<env-entry-value>
+=> 작업 폴더 바꾸니, 초기 비밀번호 설정 스텝 다시 발생... **
+=> 홈 디렉토리가 바뀐것 임, 설정 파일들이 리셋되서 발생한 현상
+
+jenkins.xml 파일을 열어 <arguments> 부분에서 젠킨스 실행 port 를 바꿔 줍니다.
+(기본 port가 8080이라서 Tomcat이랑 겹칩니다)
+=> 윈도우 인스톨러 설치는 젠킨스 독립 서비스 설치고
+WAR 파일설치는 톰캣에 앱으로 설치하는 것이라 포트 설정 바꾸는건 톰캣 포트 설정을 따른다.로 참고
+
+계정 설정
+admin 계정 매트릭스 등록, 회원가입 가능 설정
+
+잘못된 권한 설정 트러블슈팅
+http://taeil00.tistory.com/26))
+
+SSH 키 등록
+https://www.fourkitchens.com/blog/article/trigger-jenkins-builds-pushing-github
+Step 1: Grant your server access to your private Github repository.
+https://help.github.com/articles/set-up-git/
+https://developer.github.com/guides/managing-deploy-keys/
+
+깃 설정한 메일 계정으로 키 생성
+ssh-keygen -t rsa -C "edward@haruair.com"
+
+4. 젠킨스 설정
+4.1 홈 디렉토리 확인
+4.2 젠킨스 로케이션 설정
+4.3 가입 허용, 인증방식 메트릭스 베이스로 변경 후 admin 추가
+4.4 글로벌 툴에 JDK, GIT 경로 설정
+4.5 플러그인 관리에서 추가할 것 있는지 확인
+
+
+
+
+
+
+
+
+
+
+
+
